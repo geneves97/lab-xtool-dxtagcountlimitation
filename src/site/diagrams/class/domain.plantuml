@@ -1,0 +1,204 @@
+'Diagrama de classe das classes de dominio do projeto. As classes devem ser
+'definidas obrigatóriamente dentro da diretiva package.
+@startuml
+
+' @see https://plantuml.com/skinparam
+' @see https://www.uml-diagrams.org/class-diagrams-overview.html
+
+skinparam defaultFontName Droid Sans
+skinparam nodesep 50
+skinparam class {
+
+    BackgroundColor White
+    BackgroundColor<<Setting>> Wheat
+    BackgroundColor<<ReadOnly>> LightGray
+}
+'hide circle
+
+
+
+package "br.jus.tre_pa.app.domain"<<Frame>> {
+
+    ' Definição das classes
+
+    class Pessoa {
+        -id: Long {id}
+        -nome: String
+        -dtNascimento: LocalDate
+
+        -- <b>tagged values</b> --
+        api-path = /api/pessoas
+        caption = Pessoa
+        nome.caption = Nome
+        dtNascimento.caption = Data de Nascimento
+    }
+
+    class TipoPessoa<<Setting>> {
+        -id: Long {id}
+        -nome: String
+        -descricao: String
+
+        -- <b>tagged values</b> --
+        api-path = /api/tipo-pessoas
+        caption = Tipo de Pessoa
+        nome.caption = Nome
+        descricao.caption = Descrição
+    }
+'
+   class PontoTransmissao {
+       -id: Long {id}
+       -nome: String {unique, notnull}
+       -numero: Integer
+       -endereco: String
+       -habilitado: Boolean
+       -dtCriacao: LocalDateTime
+
+       -- <b>tagged values</b> --
+       api-path=/api/pontos-transmissao
+       caption = Ponto de Transmissão
+       nome.caption = Nome
+       numero.caption = Número
+       endereco.caption = Endereço
+       habilitado.caption = Habilitado
+       dtCriacao.caption = Data de Criação
+   }
+'
+   class TipoPontoTransmissao<<Setting>><<FlywayInit>> {
+        -id: Long
+        -nome: String
+        -codigo: String
+
+        -- <b>tagged values</b> --
+        api-path=/api/tipos-pontos-transmissao
+        caption=Tipo de Ponto de Transmissão
+        codigo.caption = Código
+        nome.caption = Nome
+   }
+   class LocalVotacao<<ReadOnly>> {
+       -id: Long {id}
+       -nome: String
+       -numero: Integer
+       -cep: String
+
+       -- <b>tagged values</b> --
+       api-path=/api/locais-votacao
+       caption=Local de Votação
+       nome.caption = Nome
+       numero.caption = Número
+       cep.caption = Cep
+   }
+'
+   class Secao<<ReadOnly>> {
+       -id: Long {id}
+       -numero: Integer
+
+       -- <b>tagged values</b> --
+       api-path=/api/secoes
+       caption=Seção
+       numero.caption = Número
+   }
+
+   class Zona<<ReadOnly>> {
+       -id: Long {id}
+       -sigla: String
+       -numero: Integer
+
+       -- <b>tagged values</b> --
+       api-path=/api/zonas
+       caption=Zona
+       numero.caption = Número
+       sigla.caption = Sigla
+   }
+'
+   class Municipio <<ReadOnly>> {
+       -id: Long {id}
+       -nome: String
+       -sede: Boolean
+
+       -- <b>tagged values</b> --
+       api-path=/api/municipios
+       caption=Municipio
+       nome.caption = Nome
+       sede.caption = Sede
+   }
+
+   class SituacaoPontoTransmissao<<Setting>><<ReadOnly>><<FlywayInit>> {
+        -id:Long
+        -nome:String
+        -codigo: String
+
+        -- <b>tagged values</b> --
+        api-path=/api/pontos-transmissao-situacao-status
+        caption=Status da Situação do Ponto de Transmissão
+        nome.caption = Nome
+   }
+
+}
+
+' Definição dos Relacionamentos
+
+PontoTransmissao "1" --> "1..*" LocalVotacao
+note right on link
+right-role = locaisVotacao
+right-caption = Locais de Votação
+left-role = pontoTransmissao
+left-caption = Ponto de Transmissão
+end note
+
+PontoTransmissao "1" --> "0..1" Pessoa
+note right on link
+right-role = pessoa
+left-role = pontoTransmissao
+end note
+
+Zona "1..*" --> "1..*" Municipio
+note right on link
+right-role = municipios
+left-role = zonas
+end note
+
+LocalVotacao "1" *--> "1..*" Secao
+note right on link
+right-role = secoes
+right-caption= Seções
+left-role = localVotacao
+left-caption = Local de Votação
+end note
+
+LocalVotacao "1..*" --> "1" Zona
+note right on link
+right-role = zona
+left-role = localVotacao
+left-caption = Local de Votação
+end note
+
+PontoTransmissao "0..*" --> "1" TipoPontoTransmissao
+note right on link
+right-role = tipoPontoTransmissao
+right-caption = Tipos de Pontos de Transmissão
+left-role = pontosTransmissao
+end note
+
+Pessoa "0..*" --> "1" TipoPessoa
+note right on link
+right-role = tipoPessoa
+right-caption = Tipos de Pessoas
+left-role = pessoas
+end note
+
+PontoTransmissao "0..*" --> "1" SituacaoPontoTransmissao
+note right on link
+right-role = SituacaoPontoTransmissao
+left-role = pontosTransmissao
+end note
+
+Secao "1" --> "0..*" Secao
+note right on link
+right-role = secoesAgregadas
+right-caption = Seções Agregadas
+left-role = secaoPrincipal
+left-caption = Seção Principal
+end note
+
+@enduml
+

@@ -1,0 +1,8 @@
+---
+rolePolicy:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "admin:role:policy"
+  description: Role ADMIN
+  client:
+    name: "lab-xtool-dxtagcoutlimitation-backend"
+    roles: ["ADMIN"]

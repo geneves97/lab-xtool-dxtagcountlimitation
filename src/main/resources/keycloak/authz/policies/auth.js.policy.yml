@@ -1,0 +1,11 @@
+---
+jsPolicy:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "auth:js:policy"
+  description: Policy para usuários autenticados
+  code: |
+    var context = $evaluation.getContext();
+    var identity = context.getIdentity();
+    if(identity) {
+      $evaluation.grant();
+    }

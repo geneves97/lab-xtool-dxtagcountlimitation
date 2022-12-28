@@ -1,0 +1,75 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /lab-xtool-dxtagcoutlimitation
+  error:
+    include-message: always
+spring:
+  config:
+    import: classpath:policy-enforcer.yml
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:oracle:thin:@localhost:1521:xe}
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: ${SPRING_DATASOURCE_USERNAME:labxtooldxtagcoutlimitation}
+    password: ${SPRING_DATASOURCE_PASSWORD:labxtooldxtagcoutlimitation}
+    sqlScriptEncoding: UTF-8
+    initialization-mode: always
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_prefix: APP_AUD_
+            audit_table_suffix:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+        use_sql_comments: true
+logging:
+  level:
+    br:
+      jus: ${LOGGING_LEVEL:DEBUG}
+    org:
+      keycloak: ${LOGGING_LEVEL:DEBUG}
+      hibernate:
+        SQL: ${LOGGING_LEVEL:DEBUG}
+        type:
+          descriptor:
+            sql: TRACE
+      springframework:
+        jdbc:
+          core:
+            JdbcTemplate: ${LOGGING_LEVEL:DEBUG}
+keycloak:
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL:http://localhost:8085/auth}
+  bearer-only: true
+  config:
+    base-url: ${KEYCLOAK_CONFIG_BASE_URL:http://localhost:4200/}
+    valid-redirect-url: ${KEYCLOAK_CONFIG_VALID_REDIRECT_URL:http://localhost:4200/*}
+  credentials:
+    secret: ${KEYCLOAK_CREDENTIALS_SECRET:f541e548-ff50-4c97-928d-f296fcd7be9c}
+  realm: TRE-PA
+  resource: lab-xtool-dxtagcoutlimitation-backend
+  ssl-required: external
+  use-resource-role-mappings: true
+  policy-enforcer-config:
+    enforcement-mode: ENFORCING
+    lazy-load-paths: false
+    http-method-as-scope: false
+  security-constraints:
+    - authRoles: ["*"]
+      security-collections:
+        - patterns: [ "/api/*" ]
+management:
+  server:
+    port: 8080
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus,auditevents"

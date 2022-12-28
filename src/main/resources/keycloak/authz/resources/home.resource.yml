@@ -1,0 +1,6 @@
+---
+resource:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "home:resource"
+  uris: ["/home"]
+  scopes: ["view"]

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${project.artifactId}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${project.artifactId}
+  template:
+    metadata:
+      labels:
+        app: ${project.artifactId}
+    spec:
+      containers:
+      - name: ${project.artifactId}
+        image: ${docker.registry}/sds/apps/${project.artifactId}:${project.version}.${git.commit.id.abbrev}
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            cpu: 125m
+            memory: 128Mi
+        env:
+          - name: CATALINA_OPTS
+            valueFrom:
+              secretKeyRef:
+                name: ${project.artifactId}-secret
+                key: catalinaOpts
+          - name: SEI_JKS_PASSWD
+            valueFrom:
+              secretKeyRef:
+                name: ${project.artifactId}-secret
+                key: seiJksPasswd
+      imagePullSecrets:
+      - name: harbor-k8s

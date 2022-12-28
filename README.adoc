@@ -1,0 +1,84 @@
+= lab-xtool-dxtagcoutlimitation
+:toc:
+:toc-title: Índice
+:sectnums:
+
+$artifactDescription
+
+== Especificações do Projeto
+
+- 4 profiles de execução: `local` (default), `dev`, `hmg` e `prod`
+- Suporte ao `Oracle11 XE` em ambiente de desenvolvimento local
+- `Flyway` para execução das migrations de banco de dados
+
+
+== Pré-requisitos
+
+* Docker
+* Docker composer
+* Java 8
+* Maven 3
+* Node 12
+* Angular CLI
+
+== Execução local da aplicação
+
+
+=== Passo 1 - Inicialização dos serviços
+
+Abra o terminal e na _raiz do projeto_ `lab-xtool-dxtagcoutlimitation` e executar:
+
+[source,shell]
+----
+$ sudo docker-compose up --remove-orphans
+----
+
+O serviço estará operacional quando hover a seguinte saida no console
+
+[source, log]
+----
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Grant succeeded.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Grant succeeded.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Grant succeeded.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Grant succeeded.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Grant succeeded.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | User altered.
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe | Disconnected from Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+lab-xtool-dxtagcoutlimitation-oraclexe |
+lab-xtool-dxtagcoutlimitation-oraclexe |
+----
+
+
+=== Passo 2 - Execução do módulo backend
+
+Ainda no terminal entrar no módulo backend:
+
+[source, shell]
+----
+$ mvn clean spring-boot:run
+----
+
+=== Passo 3 - Execução do módulo frontend
+
+Na raiz do projeto entrar no módulo frontend:
+
+[source, shell]
+----
+$ npm i
+$ npx ng s
+----
+
+> O comando `npm i` só é necessário caso seja a primeira execução do módulo frontend ou alguma dependência do projeto tenha sido alterada.

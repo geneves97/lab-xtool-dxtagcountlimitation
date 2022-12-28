@@ -1,0 +1,7 @@
+---
+resourcePermission:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "home:permission"
+  description: Home Permission
+  resources: ["home:resource"]
+  policies: ["auth:js:policy"]

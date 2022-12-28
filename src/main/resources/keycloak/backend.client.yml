@@ -1,0 +1,14 @@
+---
+client:
+  name: "lab-xtool-dxtagcoutlimitation-backend"
+  secret: ${keycloak.client.secret}
+  baseUrl: /lab-xtool-dxtagcoutlimitation-backend
+  redirectUris: ["/lab-xtool-dxtagcoutlimitation-backend/*"]
+  serviceAccountsEnabled: true
+  authorizationServicesEnabled: true
+  standardFlowEnabled: true
+  directAccessGrantsEnabled: true
+  roles:
+    - name: "ADMIN"
+      description: Role de Administração
+

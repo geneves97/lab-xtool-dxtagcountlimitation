@@ -1,0 +1,24 @@
+---
+client:
+  name: lab-xtool-dxtagcoutlimitation-frontend
+  redirectUris: ["/lab-xtool-dxtagcoutlimitation-frontend/*"]
+  webOrigins: ["/app2-frontend/*"]
+  baseUrl: /lab-xtool-dxtagcoutlimitation-frontend
+  publicClient: true
+  directAccessGrantsEnabled: true
+  standardFlowEnabled: true
+  protocolMappers:
+    - name: group_mapper
+      type: oidc-group-membership-mapper
+      protocol: openid-connect
+      config:
+        claim.name: groups
+        full.path: false
+        id.token.claim: false
+        access.token.claim: true
+        userinfo.token.claim: false
+  scopeMappings:
+    - client: "account"
+      roles: ["view-profile", "manage-account"]
+    - client: "lab-xtool-dxtagcoutlimitation-backend"
+      allRoles: true
