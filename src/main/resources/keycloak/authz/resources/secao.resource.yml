@@ -1,0 +1,6 @@
+---
+resource:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "secao:resource"
+  uris: ["/api/secao/*"]
+  scopes: ["view", "create", "update", "delete"]

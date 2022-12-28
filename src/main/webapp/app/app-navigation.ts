@@ -5,18 +5,106 @@
  */
 export const navigation = [
   {
-    text: 'Home',
-    path: '/home',
-    icon: 'home'
+    text : 'Home',
+    path : '/home',
+    icon : 'home'
   },
   {
-    text: 'Relatórios',
-    path: '/relatorios',
-    icon: 'file'
+    text : 'Zona',
+    path : '/zona',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'zona:resource:view'
+      }
+    }
   },
   {
-    text: 'Configurações',
-    icon: 'preferences',
-    items: []
+    text : 'Seção',
+    path : '/secao',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'secao:resource:view'
+      }
+    }
   },
+  {
+    text : 'Ponto de Transmissão',
+    path : '/ponto-transmissao',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'ponto-transmissao:resource:view'
+      }
+    }
+  },
+  {
+    text : 'Pessoa',
+    path : '/pessoa',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'pessoa:resource:view'
+      }
+    }
+  },
+  {
+    text : 'Municipio',
+    path : '/municipio',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'municipio:resource:view'
+      }
+    }
+  },
+  {
+    text : 'Local de Votação',
+    path : '/local-votacao',
+    icon : 'activefolder',
+    data : {
+      permissions : {
+        only : 'local-votacao:resource:view'
+      }
+    }
+  },
+  {
+    text : 'Relatórios',
+    path : '/relatorios',
+    icon : 'file'
+  },
+  {
+    text : 'Configurações',
+    icon : 'preferences',
+    items : [
+      {
+        text : 'Tipo de Pessoa',
+        path : '/tipo-pessoa',
+        data : {
+          permissions : {
+            only : 'tipo-pessoa:resource:view'
+          }
+        }
+      },
+      {
+        text : 'Tipo de Ponto de Transmissão',
+        path : '/tipo-ponto-transmissao',
+        data : {
+          permissions : {
+            only : 'tipo-ponto-transmissao:resource:view'
+          }
+        }
+      },
+      {
+        text : 'Status da Situação do Ponto de Transmissão',
+        path : '/situacao-ponto-transmissao',
+        data : {
+          permissions : {
+            only : 'situacao-ponto-transmissao:resource:view'
+          }
+        }
+      }
+    ]
+  }
 ];

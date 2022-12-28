@@ -1,0 +1,6 @@
+---
+resource:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "situacao-ponto-transmissao:resource"
+  uris: ["/api/situacao-ponto-transmissao/*"]
+  scopes: ["view", "create", "update", "delete"]

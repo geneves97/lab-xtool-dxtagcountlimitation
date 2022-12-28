@@ -1,0 +1,156 @@
+<div class="content-block">
+  <div
+    class="app-header"
+    fxLayout="row"
+    fxLayoutAlign="start center">
+    <h2>{{ pageTitle }}</h2>
+    <dx-button
+      class="app-button-back"
+      text="Voltar"
+      icon="arrowleft"
+      stylingMode="text"
+      type="normal"
+      (onClick)="back()"></dx-button>
+  </div>
+  <div class="dx-card responsive-paddings">
+    <form
+      autocomplete="off"
+      (submit)="doSave($event)">
+      <dx-form
+        id="form"
+        [formData]="formData"
+        requiredMark="<span title='campo obrigatório'>*</span>">
+        <dxi-item dataField="nome">
+          <dxo-label text="Nome"></dxo-label>
+          <dxi-validation-rule
+            type="required"
+            message="O campo Nome é obrigatório"></dxi-validation-rule>
+          <dxi-validation-rule
+            type="stringLength"
+            [max]="255"
+            message="O campo Nome deve possuir no máximo 255 caracteres."></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="numero"
+          editorType="dxNumberBox">
+          <dxo-label text="Número"></dxo-label>
+        </dxi-item>
+
+        <dxi-item dataField="endereco">
+          <dxo-label text="Endereço"></dxo-label>
+          <dxi-validation-rule
+            type="stringLength"
+            [max]="255"
+            message="O campo Endereço deve possuir no máximo 255 caracteres."></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="habilitado"
+          editorType="dxCheckBox"
+          alignment="left">
+        </dxi-item>
+
+        <dxi-item
+          dataField="dtCriacao"
+          editorType="dxDateBox"
+          [editorOptions]="{
+            displayFormat: 'dd/MM/yyyy HH:ss',
+            useMaskBehavior: true,
+            openOnFieldClick: true,
+            value: null
+          }">
+          <dxo-label text="Data de Criação"></dxo-label>
+        </dxi-item>
+
+        <dxi-item
+          itemType="group"
+          caption="Informações sobre Local de Votação ({{ formData?.locaisVotacao?.length || 0 }})">
+          <!-- @see https://js.devexpress.com/Documentation/20_2/ApiReference/UI_Components/dxTagBox/ !-->
+          <!-- @see https://js.devexpress.com/Documentation/20_2/Guide/UI_Components/TagBox/Getting_Started_with_TagBox/ !-->
+          <dxi-item
+            editorType="dxTagBox"
+            dataField="locaisVotacao"
+            [label]="{ visible: false }"
+            [editorOptions]="{
+              valueExpr: 'id',
+              displayExpr: 'nome',
+              searchEnabled: true,
+              dataSource: localVotacaoDxTagBoxDataSource
+            }">
+          </dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          caption="Informações sobre Tipo de Ponto de Transmissão"
+          colCount="5">
+          <dxi-item
+            dataField="tipoPontoTransmissao"
+            editorType="dxSelectBox"
+            colSpan="4"
+            [label]="{ visible: false }"
+            [editorOptions]="{
+              valueExpr: 'id',
+              displayExpr: 'nome',
+              searchEnabled: true,
+              searchExpr: 'nome',
+              dataSource: tipoPontoTransmissaoDxSelectBoxDataSource
+            }">
+            <dxo-label text="tipoPontoTransmissao"></dxo-label>
+          </dxi-item>
+          <ng-template [ngxPermissionsOnly]="['ponto-transmissao:resource:create']">
+            <dxi-item
+              itemType="button"
+              horizontalAlignment="left"
+              verticalAlignment="bottom"
+              [buttonOptions]="tipoPontoTransmissaoAddButtonOptions">
+            </dxi-item>
+          </ng-template>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          caption="Informações sobre Status da Situação do Ponto de Transmissão">
+          <dxi-item
+            dataField="situacaoPontoTransmissao"
+            editorType="dxSelectBox"
+            [label]="{ visible: false }"
+            [editorOptions]="{
+              valueExpr: 'id',
+              displayExpr: 'nome',
+              searchEnabled: true,
+              searchExpr: 'nome',
+              dataSource: situacaoPontoTransmissaoDxSelectBoxDataSource
+            }">
+            <dxo-label text="situacaoPontoTransmissao"></dxo-label>
+          </dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          colCount="2"
+          [colCountByScreen]="{ xs: 2 }">
+          <dxi-item
+            itemType="button"
+            horizontalAlignment="left"
+            [buttonOptions]="{
+              text: 'Salvar',
+              type: 'default',
+              useSubmitBehavior: true,
+              disabled: saveSub && !saveSub.closed
+            }">
+          </dxi-item>
+          <dxi-item
+            itemType="button"
+            horizontalAlignment="left"
+            [buttonOptions]="{
+              text: 'Cancelar',
+              onClick: back
+            }">
+          </dxi-item>
+        </dxi-item>
+      </dx-form>
+    </form>
+  </div>
+  <app-tipo-ponto-transmissao-edit
+    #tipoPontoTransmissaoEditComponent
+    (onAfterSave)="onSaveTipoPontoTransmissao($event)"></app-tipo-ponto-transmissao-edit>
+</div>

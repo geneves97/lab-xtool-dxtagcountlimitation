@@ -1,0 +1,74 @@
+<div class="content-block">
+  <div
+    class="app-header"
+    style="margin-left: -15px"
+    fxLayout="row"
+    fxLayoutAlign="start center">
+    <h2>{{ pageTitle }} ({{ totalResources }})</h2>
+  </div>
+</div>
+<dx-data-grid
+  [dataSource]="dataSource"
+  [allowColumnReordering]="true"
+  [allowColumnResizing]="true"
+  [columnAutoWidth]="true"
+  [wordWrapEnabled]="true"
+  [cellHintEnabled]="true"
+  [remoteOperations]="true"
+  (onContentReady)="onContentReady()"
+  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
+  <dxo-sorting mode="multiple"></dxo-sorting>
+  <dxo-paging [pageSize]="20"></dxo-paging>
+  <dxo-pager
+    [allowedPageSizes]="[20]"
+    [showNavigationButtons]="true"
+    [showInfo]="true"></dxo-pager>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-search-panel
+    [visible]="true"
+    [width]="300"></dxo-search-panel>
+  <!-- COLUMNS -->
+  <!-- Coluna: nome -->
+  <!-- Tipo: String -->
+  <dxi-column
+    dataField="nome"
+    caption="Nome"
+    [allowSearch]="true"
+    [allowFiltering]="false"
+    [allowHeaderFiltering]="false">
+  </dxi-column>
+  <!-- Coluna: sede -->
+  <!-- Tipo: Boleano -->
+  <dxi-column
+    dataField="sede"
+    caption="Sede"
+    dataType="boolean"
+    alignment="left"
+    cellTemplate="cellTemplate">
+    <div *dxTemplate="let cell of 'cellTemplate'">
+      <div>{{ cell.value ? 'Sim' : 'Não' }}</div>
+    </div>
+  </dxi-column>
+  <!-- BUTTONS -->
+  <dxi-column
+    type="buttons"
+    cellTemplate="buttonsTemplate">
+    <div
+      *dxTemplate="let data of 'buttonsTemplate'"
+      fxLayout="row"
+      fxLayoutAlign="space-between center">
+      <ng-template [ngxPermissionsOnly]="['municipio:resource:update']"> </ng-template>
+      <!--            <dx-button-->
+      <!--                    icon="trash"-->
+      <!--                    hint="Excluir"-->
+      <!--                    (onClick)="confirmDelete(data.data)">-->
+      <!--            </dx-button>-->
+      <dx-button
+        icon="chevronnext"
+        hint="Ver Detalhes"
+        (onClick)="detail(data.data.id)">
+      </dx-button>
+    </div>
+  </dxi-column>
+</dx-data-grid>

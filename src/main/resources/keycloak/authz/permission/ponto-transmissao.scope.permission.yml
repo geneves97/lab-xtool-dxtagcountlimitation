@@ -1,0 +1,16 @@
+---
+scopePermission:
+    clientId: lab-xtool-dxtagcoutlimitation-backend
+    name: "ponto-transmissao:permission:view"
+    description: Permissão de visualização do recurso PontoTransmissao.
+    resources: ["ponto-transmissao:resource"]
+    scopes: ["view"]
+    policies: ["auth:js:policy"]
+---
+scopePermission:
+    clientId: lab-xtool-dxtagcoutlimitation-backend
+    name: "ponto-transmissao:permission:modify"
+    description: Permissão de modificação (criar, atualizar ou deletar) do recurso PontoTransmissao.
+    resources: ["ponto-transmissao:resource"]
+    scopes: ["create", "update", "delete"]
+    policies: ["auth:js:policy"]

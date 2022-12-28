@@ -1,0 +1,16 @@
+---
+scopePermission:
+    clientId: lab-xtool-dxtagcoutlimitation-backend
+    name: "zona:permission:view"
+    description: Permissão de visualização do recurso Zona.
+    resources: ["zona:resource"]
+    scopes: ["view"]
+    policies: ["auth:js:policy"]
+---
+scopePermission:
+    clientId: lab-xtool-dxtagcoutlimitation-backend
+    name: "zona:permission:modify"
+    description: Permissão de modificação (criar, atualizar ou deletar) do recurso Zona.
+    resources: ["zona:resource"]
+    scopes: ["create", "update", "delete"]
+    policies: ["auth:js:policy"]

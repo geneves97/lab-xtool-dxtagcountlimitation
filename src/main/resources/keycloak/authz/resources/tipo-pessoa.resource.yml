@@ -1,0 +1,6 @@
+---
+resource:
+  clientId: lab-xtool-dxtagcoutlimitation-backend
+  name: "tipo-pessoa:resource"
+  uris: ["/api/tipo-pessoa/*"]
+  scopes: ["view", "create", "update", "delete"]

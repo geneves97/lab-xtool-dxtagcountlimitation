@@ -1,0 +1,99 @@
+<div class="content-block">
+  <div
+    class="app-header"
+    fxLayout="row"
+    fxLayoutAlign="start center">
+    <h2>{{ pageTitle }}</h2>
+    <dx-button
+      class="app-button-back"
+      text="Voltar"
+      icon="arrowleft"
+      stylingMode="text"
+      type="normal"
+      (onClick)="back()"></dx-button>
+  </div>
+  <div class="dx-card responsive-paddings">
+    <form
+      autocomplete="off"
+      (submit)="doSave($event)">
+      <dx-form
+        id="form"
+        [formData]="formData"
+        requiredMark="<span title='campo obrigatório'>*</span>">
+        <dxi-item dataField="nome">
+          <dxo-label text="Nome"></dxo-label>
+          <dxi-validation-rule
+            type="stringLength"
+            [max]="255"
+            message="O campo Nome deve possuir no máximo 255 caracteres."></dxi-validation-rule>
+        </dxi-item>
+
+        <dxi-item
+          dataField="dtNascimento"
+          editorType="dxDateBox"
+          [editorOptions]="{
+            displayFormat: 'dd/MM/yyyy',
+            useMaskBehavior: true,
+            openOnFieldClick: true,
+            value: null
+          }">
+          <dxo-label text="Data de Nascimento"></dxo-label>
+        </dxi-item>
+
+        <dxi-item
+          itemType="group"
+          caption="Informações sobre Tipo de Pessoa"
+          colCount="5">
+          <dxi-item
+            dataField="tipoPessoa"
+            editorType="dxSelectBox"
+            colSpan="4"
+            [label]="{ visible: false }"
+            [editorOptions]="{
+              valueExpr: 'id',
+              displayExpr: 'nome',
+              searchEnabled: true,
+              searchExpr: 'nome',
+              dataSource: tipoPessoaDxSelectBoxDataSource
+            }">
+            <dxo-label text="tipoPessoa"></dxo-label>
+          </dxi-item>
+          <ng-template [ngxPermissionsOnly]="['pessoa:resource:create']">
+            <dxi-item
+              itemType="button"
+              horizontalAlignment="left"
+              verticalAlignment="bottom"
+              [buttonOptions]="tipoPessoaAddButtonOptions">
+            </dxi-item>
+          </ng-template>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          colCount="2"
+          [colCountByScreen]="{ xs: 2 }">
+          <dxi-item
+            itemType="button"
+            horizontalAlignment="left"
+            [buttonOptions]="{
+              text: 'Salvar',
+              type: 'default',
+              useSubmitBehavior: true,
+              disabled: saveSub && !saveSub.closed
+            }">
+          </dxi-item>
+          <dxi-item
+            itemType="button"
+            horizontalAlignment="left"
+            [buttonOptions]="{
+              text: 'Cancelar',
+              onClick: back
+            }">
+          </dxi-item>
+        </dxi-item>
+      </dx-form>
+    </form>
+  </div>
+  <app-tipo-pessoa-edit
+    #tipoPessoaEditComponent
+    (onAfterSave)="onSaveTipoPessoa($event)"></app-tipo-pessoa-edit>
+</div>

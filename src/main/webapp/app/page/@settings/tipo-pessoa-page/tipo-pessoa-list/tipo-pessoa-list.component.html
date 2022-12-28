@@ -1,0 +1,85 @@
+<div class="content-block">
+  <div
+    class="app-header"
+    style="margin-left: -15px"
+    fxLayout="row"
+    fxLayoutAlign="start center">
+    <h2>{{ pageTitle }} ({{ totalResources }})</h2>
+  </div>
+</div>
+<dx-data-grid
+  [dataSource]="dataSource"
+  [allowColumnReordering]="true"
+  [allowColumnResizing]="true"
+  [columnAutoWidth]="true"
+  [wordWrapEnabled]="true"
+  [cellHintEnabled]="true"
+  [remoteOperations]="true"
+  (onContentReady)="onContentReady()"
+  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
+  <dxo-sorting mode="multiple"></dxo-sorting>
+  <dxo-paging [pageSize]="20"></dxo-paging>
+  <dxo-pager
+    [allowedPageSizes]="[20]"
+    [showNavigationButtons]="true"
+    [showInfo]="true"></dxo-pager>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-search-panel
+    [visible]="true"
+    [width]="300"></dxo-search-panel>
+  <!-- COLUMNS -->
+  <!-- Coluna: nome -->
+  <!-- Tipo: String -->
+  <dxi-column
+    dataField="nome"
+    caption="Nome"
+    [allowSearch]="true"
+    [allowFiltering]="false"
+    [allowHeaderFiltering]="false">
+  </dxi-column>
+  <!-- Coluna: codigo -->
+  <!-- Tipo: String -->
+  <dxi-column
+    dataField="codigo"
+    caption="Código"
+    [allowSearch]="true"
+    [allowFiltering]="false"
+    [allowHeaderFiltering]="false">
+  </dxi-column>
+  <!-- BUTTONS -->
+  <dxi-column
+    type="buttons"
+    cellTemplate="buttonsTemplate">
+    <div
+      *dxTemplate="let data of 'buttonsTemplate'"
+      fxLayout="row"
+      fxLayoutAlign="space-between center">
+      <ng-template [ngxPermissionsOnly]="['tipo-pessoa:resource:update']">
+        <dx-button
+          [visible]="!config.isReadOnly"
+          icon="edit"
+          hint="Editar"
+          (onClick)="edit(data.data.id)">
+        </dx-button>
+      </ng-template>
+      <ng-template [ngxPermissionsOnly]="['tipo-pessoa:resource:delete']">
+        <dx-button
+          icon="trash"
+          hint="Excluir"
+          [visible]="!config.isReadOnly"
+          style="margin-right: auto"
+          (onClick)="confirmDelete(data.data.id)">
+        </dx-button>
+      </ng-template>
+      <!--      <dx-button-->
+      <!--        icon="chevronnext"-->
+      <!--        hint="Ver Detalhes"-->
+      <!--        (onClick)="detail(data.data.id)">-->
+      <!--      </dx-button>-->
+    </div>
+  </dxi-column>
+</dx-data-grid>
+<app-tipo-pessoa-edit
+  #tipoPessoaEditComponent
+  (onAfterSave)="onSaveTipoPessoa($event)"></app-tipo-pessoa-edit>
