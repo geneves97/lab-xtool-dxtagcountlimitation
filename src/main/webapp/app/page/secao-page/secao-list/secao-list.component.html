@@ -7,54 +7,104 @@
     <h2>{{ pageTitle }} ({{ totalResources }})</h2>
   </div>
 </div>
-<dx-data-grid
-  [dataSource]="dataSource"
-  [allowColumnReordering]="true"
-  [allowColumnResizing]="true"
-  [columnAutoWidth]="true"
-  [wordWrapEnabled]="true"
-  [cellHintEnabled]="true"
-  [remoteOperations]="true"
-  (onContentReady)="onContentReady()"
-  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
-  <dxo-sorting mode="multiple"></dxo-sorting>
-  <dxo-paging [pageSize]="20"></dxo-paging>
-  <dxo-pager
-    [allowedPageSizes]="[20]"
-    [showNavigationButtons]="true"
-    [showInfo]="true"></dxo-pager>
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-search-panel
-    [visible]="true"
-    [width]="300"></dxo-search-panel>
-  <!-- COLUMNS -->
-  <!-- Coluna: numero -->
-  <!-- Tipo: Númérico -->
-  <dxi-column
-    dataField="numero"
-    caption="Número"
-    [alignment]="'left'">
-  </dxi-column>
-  <!-- BUTTONS -->
-  <dxi-column
-    type="buttons"
-    cellTemplate="buttonsTemplate">
-    <div
-      *dxTemplate="let data of 'buttonsTemplate'"
-      fxLayout="row"
-      fxLayoutAlign="space-between center">
-      <ng-template [ngxPermissionsOnly]="['secao:resource:update']"> </ng-template>
-      <!--            <dx-button-->
-      <!--                    icon="trash"-->
-      <!--                    hint="Excluir"-->
-      <!--                    (onClick)="confirmDelete(data.data)">-->
-      <!--            </dx-button>-->
-      <dx-button
-        icon="chevronnext"
-        hint="Ver Detalhes"
-        (onClick)="detail(data.data.id)">
-      </dx-button>
+<p> Estou aqui </p>
+
+<!--daqui em diante sera teste-->
+
+<div>
+  <div class="dx-fieldset">
+    <div class="dx-field">
+      <div class="dx-field-label">Default mode</div>
+      <div class="dx-field-value">
+        <dx-tag-box [items]="simpleProducts"></dx-tag-box>
+      </div>
     </div>
-  </dxi-column>
-</dx-data-grid>
+    <div class="dx-field">
+      <div class="dx-field-label">Search mode</div>
+      <div class="dx-field-value">
+        <dx-tag-box [items]="simpleProducts" [searchEnabled]="true">
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Batch selection</div>
+      <div class="dx-field-value">
+        <dx-tag-box
+          [items]="simpleProducts"
+          [showSelectionControls]="true"
+          applyValueMode="useButtons"
+        >
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Hide selected items</div>
+      <div class="dx-field-value">
+        <dx-tag-box [items]="simpleProducts" [hideSelectedItems]="true">
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Single line mode</div>
+      <div class="dx-field-value">
+        <dx-tag-box [items]="simpleProducts" [multiline]="false"> </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Add custom items</div>
+      <div class="dx-field-value">
+        <dx-tag-box
+          [items]="editableProducts"
+          [acceptCustomValue]="true"
+          (onCustomItemCreating)="onCustomItemCreating($event)"
+        >
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">With custom placeholder</div>
+      <div class="dx-field-value">
+        <dx-tag-box [items]="simpleProducts" placeholder="Choose Product...">
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Disabled</div>
+      <div class="dx-field-value">
+        <dx-tag-box
+          [items]="simpleProducts"
+          [value]="[simpleProducts[0]]"
+          [disabled]="true"
+        >
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Data source</div>
+      <div class="dx-field-value">
+        <dx-tag-box [dataSource]="dataSource" displayExpr="Name" valueExpr="Id">
+        </dx-tag-box>
+      </div>
+    </div>
+    <div class="dx-field">
+      <div class="dx-field-label">Custom template</div>
+      <div class="dx-field-value">
+        <dx-tag-box
+          [dataSource]="dataSource"
+          displayExpr="Name"
+          valueExpr="Id"
+          itemTemplate="customItem"
+        >
+          <div *dxTemplate="let product of 'customItem'">
+            <div class="custom-item">
+              <img [src]="product.ImageSrc" />
+              <div class="product-name">
+                {{ product.Name }}
+              </div>
+            </div>
+          </div>
+        </dx-tag-box>
+      </div>
+    </div>
+  </div>
+</div>
